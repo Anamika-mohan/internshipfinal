@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Calculator</title>
+    <style>
+        body{
+            text-align:center;
+            color: brown;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            margin:  0px  0px  0px 500px;
+            padding: 0px;
+            background-image: url('https://cms.involve.me/blog/how-to-embed-calculator/calculatorL.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+        }
+        h2{
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 50px;
+            text-shadow: 5px 5px 5px beige;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size:25px;
+            text-shadow: 3px 3px 3px beige;
+        }
+        input[type="number"] {
+            width: 100px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: darkred;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: lightcoral;
+        }
+        #result {
+            margin-top: 60px;
+            font-size: 40px;
+        }
+        select{
+            background-color: burlywood;
+            color: brown;
+            padding: 5px;
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Select Calculation Type</h2> <br><br>
+    <form id="calculatorForm">
+        <label for="calculationType">This Calculator is specially made for calculating:<br><br<br>
+            Simple Interest, Compound Interest, Loan Payment & Investment Return
+        </label> <br><br><br>
+        <select id="calculationType" onchange="showFields()">
+            <option value="simpleInterest">Simple Interest</option>
+            <option value="compoundInterest">Compound Interest</option>
+            <option value="loanPayment">Loan Payment</option>
+            <option value="investmentReturn">Investment Return</option>
+        </select> <br><br><br>
+
+        <div id="fields"></div>
+
+        <button type="button" onclick="calculate()">Calculate</button>
+    </form>
+
+    <div id="result"></div>
+    <script>
+        function showFields() {
+            var calculationType = document.getElementById('calculationType').value;
+            var fields = document.getElementById('fields');
+            fields.innerHTML = '';
+
+            if (calculationType === 'simpleInterest' || calculationType === 'compoundInterest') {
+                fields.innerHTML = `
+                    <label for="principal">Principal Amount:</label>
+                    <input type="number" id="principal" name="principal" required><br>
+
+                    <label for="interestRate">Annual Interest Rate (%):</label>
+                    <input type="number" id="interestRate" name="interestRate" required><br>
+
+                    <label for="time">Time Period (Years):</label>
+                    <input type="number" id="time" name="time" required><br>
+                `;
+            } else if (calculationType === 'loanPayment') {
+                fields.innerHTML = `
+                    <label for="loanAmount">Loan Amount:</label>
+                    <input type="number" id="loanAmount" name="loanAmount" required><br>
+
+                    <label for="annualInterestRate">Annual Interest Rate (%):</label>
+                    <input type="number" id="annualInterestRate" name="annualInterestRate" required><br>
+
+                    <label for="loanTerm">Loan Term (Months):</label>
+                    <input type="number" id="loanTerm" name="loanTerm" required><br>
+                `;
+            } else if (calculationType === 'investmentReturn') {
+                fields.innerHTML = `
+                    <label for="investmentAmount">Investment Amount:</label>
+                    <input type="number" id="investmentAmount" name="investmentAmount" required><br>
+
+                    <label for="annualReturnRate">Annual Return Rate (%):</label>
+                    <input type="number" id="annualReturnRate" name="annualReturnRate" required><br>
+
+                    <label for="investmentYears">Investment Years:</label>
+                    <input type="number" id="investmentYears" name="investmentYears" required><br>
+                `;
+            }
+        }
+
+        function calculate() {
+            var calculationType = document.getElementById('calculationType').value;
+            var resultElement = document.getElementById('result');
+
+            if (calculationType === 'simpleInterest') {
+                var principal = parseFloat(document.getElementById('principal').value);
+                var interestRate = parseFloat(document.getElementById('interestRate').value);
+                var time = parseFloat(document.getElementById('time').value);
+
+                var simpleInterest = (principal * interestRate * time) / 100;
+                resultElement.innerHTML = "Simple Interest: ₹" + simpleInterest.toFixed(2);
+            } else if (calculationType === 'compoundInterest') {
+                var principal = parseFloat(document.getElementById('principal').value);
+                var interestRate = parseFloat(document.getElementById('interestRate').value);
+                var time = parseFloat(document.getElementById('time').value);
+
+                var compoundInterest = principal * Math.pow((1 + interestRate / 100), time) - principal;
+                resultElement.innerHTML = "Compound Interest: ₹" + compoundInterest.toFixed(2);
+            } else if (calculationType === 'loanPayment') {
+                var loanAmount = parseFloat(document.getElementById('loanAmount').value);
+                var annualInterestRate = parseFloat(document.getElementById('annualInterestRate').value);
+                var loanTerm = parseFloat(document.getElementById('loanTerm').value);
+
+                var monthlyInterestRate = annualInterestRate / 12 / 100;
+                var monthlyPayment = (loanAmount * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -loanTerm));
+                resultElement.innerHTML = "Monthly Payment: ₹" + monthlyPayment.toFixed(2);
+            } else if (calculationType === 'investmentReturn') {
+                var investmentAmount = parseFloat(document.getElementById('investmentAmount').value);
+                var annualReturnRate = parseFloat(document.getElementById('annualReturnRate').value);
+                var investmentYears = parseFloat(document.getElementById('investmentYears').value);
+
+                var totalReturn = investmentAmount * Math.pow((1 + annualReturnRate / 100), investmentYears);
+                var profit = totalReturn - investmentAmount;
+                resultElement.innerHTML = "Total Return: ₹" + totalReturn.toFixed(2) + "<br>Profit: ₹" + profit.toFixed(2);
+            }
+        }
+    </script>
+</body>
+</html>

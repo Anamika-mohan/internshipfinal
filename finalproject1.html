@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Calculator</title>
+    <style>
+    body{
+    text-align: center;
+    color: brown;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin: 0px;
+    padding: 0px;
+    background-image: url('https://images.pexels.com/photos/6963030/pexels-photo-6963030.jpeg?cs=srgb&dl=pexels-mikhail-nilov-6963030.jpg&fm=jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    }
+   .container {
+    text-align: center;
+    animation: fadeIn 2s ease;
+   }
+
+   @keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 2;
+    }
+   }
+
+   h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: wheat;
+    text-shadow: 5px 5px 5px black;
+    animation: slideInUp 2s ease;
+   }
+
+   p {
+    font-size: 1.5em;
+    margin-bottom: 30px;
+    color: beige;
+    text-shadow: 5px 5px 5px beige;
+    animation: slideInUp 2s ease;
+   }
+
+   button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    background-color: wheat;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    animation: slideInUp 2s ease;
+   }
+
+   button:hover {
+    background-color: black;
+   }
+
+   @keyframes slideInUp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 2;
+    }
+   }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Financial Calculator</h1> <br><br>
+    <p>Click the button below to start calculating.</p>
+    <a href="finalproject2.html"><button>Calculate Now</button></a>   
+</body>
+</html>
